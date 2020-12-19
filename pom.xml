@@ -130,7 +130,7 @@
             </goals>
             <configuration>
               <inputSpec>
-                ${project.basedir}src/main/resources/postacomAPI.yaml
+                ${project.basedir}/src/main/resources/postacomAPI.yaml
               </inputSpec>
               <generatorName>spring</generatorName>
               <modelPackage>com.sbkftw.postacom.generated.model</modelPackage>
