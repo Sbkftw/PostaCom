@@ -5,11 +5,9 @@ info:
   description: PostaCom API
   contact:
     name: Riquette Julien
-    url: cirb.brussels
     email: jriquette@cirb.brussels
   license:
     name: CIRB
-    url: cirb.brussels
 servers:
   - url: 'http://localhost:8086'
     description: Generated server url
