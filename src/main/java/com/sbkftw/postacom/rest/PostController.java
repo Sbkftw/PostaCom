@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +30,11 @@ public class PostController {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final ModelMapper    modelMapper;
 
     @Autowired
     public PostController(PostRepository postRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -43,7 +43,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/api/{postId}")
-    public Post getPost(@PathVariable("postId") Integer id) {
+    public Post getPost(@PathVariable("postId") @Digits(integer = 10, fraction = 0) @NotNull Integer id) {
         return postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -53,7 +53,7 @@ public class PostController {
     }
 
     @PutMapping(value = "/{postId}", consumes = APPLICATION_JSON_VALUE)
-    public void likePost(@PathVariable("postId") Integer id) {
+    public void likePost(@PathVariable("postId") @Digits(integer = 10, fraction = 0) @NotNull Integer id) {
         Post likedPost = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         likedPost.like();
         postRepository.save(likedPost);

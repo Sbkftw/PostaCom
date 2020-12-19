@@ -1,11 +1,15 @@
 package com.sbkftw.postacom.rest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +43,14 @@ public class CommentController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping
+    public List<Comment> getComments(@PathVariable("postId") Integer postId) {
+        return commentRepository.findByPost(postId);
+    }
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public void createComment(@RequestBody @Valid CommentDTO comment, @PathVariable Integer postId) {
+    public void createComment(@RequestBody @Valid CommentDTO comment,
+            @PathVariable("postId") @Digits(integer = 10, fraction = 0) @NotNull Integer postId) {
         comment.setPost(postId);
         commentRepository.save(convertToEntity(comment));
     }

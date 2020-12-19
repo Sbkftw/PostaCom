@@ -3,6 +3,8 @@ package com.sbkftw.postacom.rest;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}")
-    public User getUser(@PathVariable("userId") Integer id) {
+    public User getUser(@PathVariable("userId") @Digits(integer = 10, fraction = 0) @NotNull Integer id) {
         return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -47,7 +49,8 @@ public class UserController {
     }
 
     @PutMapping(value = "/{userId}", consumes = APPLICATION_JSON_VALUE)
-    public void updateUser(@PathVariable("userId") Integer id, @RequestBody @Valid UserDTO user) {
+    public void updateUser(@PathVariable("userId") @Digits(integer = 10, fraction = 0) @NotNull Integer id,
+            @RequestBody @Valid UserDTO user) {
         User updatedUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         modelMapper.map(convertToEntity(user), updatedUser);
         updatedUser.setId(id);
