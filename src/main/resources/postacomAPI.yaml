@@ -32,7 +32,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Comment'
       tags:
-        - CommentController
+        - Comment
     post:
       operationId: createComment
       parameters:
@@ -50,9 +50,11 @@ paths:
       responses:
         '200':
           description: default response
+      tags:
+        - Comment
   /api/users:
     get:
-      operationId: getAllUser
+      operationId: getAllUsers
       responses:
         '200':
           description: default response
@@ -63,7 +65,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       tags:
-        - UserController
+        - User
     post:
       operationId: createUser
       requestBody:
@@ -74,6 +76,8 @@ paths:
       responses:
         '200':
           description: default response
+      tags:
+        - User
   '/api/posts/{postId}':
     put:
       operationId: likePost
@@ -88,7 +92,7 @@ paths:
         '200':
           description: default response
       tags:
-        - PostController
+        - Post
   '/api/posts/api/{postId}':
     get:
       operationId: getPost
@@ -107,7 +111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Post'
       tags:
-        - PostController
+        - Post
   /api/posts:
     get:
       operationId: getPosts
@@ -121,7 +125,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Post'
       tags:
-        - PostController
+        - Post
+      summary: ''
     post:
       operationId: createPost
       requestBody:
@@ -132,6 +137,8 @@ paths:
       responses:
         '200':
           description: default response
+      tags:
+        - Post
   '/api/users/{userId}':
     get:
       operationId: getUser
@@ -150,7 +157,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       tags:
-        - UserController
+        - User
     put:
       operationId: updateUser
       parameters:
@@ -168,6 +175,8 @@ paths:
       responses:
         '200':
           description: default response
+      tags:
+        - User
 components:
   schemas:
     Comment:
@@ -213,6 +222,8 @@ components:
         - User
     CommentDTO:
       type: object
+      x-tags:
+        - Comment
       properties:
         message:
           type: string
@@ -220,14 +231,13 @@ components:
           maxLength: 500
         author:
           type: string
+          format: email
         post:
           type: integer
           format: int32
       required:
         - message
         - author
-      x-tags:
-        - Comment
     Post:
       type: object
       properties:
@@ -291,6 +301,6 @@ components:
       x-tags:
         - User
 tags:
-  - name: CommentController
-  - name: UserController
-  - name: PostController
+  - name: Post
+  - name: Comment
+  - name: User
