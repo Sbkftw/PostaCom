@@ -2,11 +2,19 @@ openapi: 3.0.1
 info:
   title: OpenAPI definition
   version: v0
+  description: PostaCom API
+  contact:
+    name: Riquette Julien
+    url: cirb.brussels
+    email: jriquette@cirb.brussels
+  license:
+    name: CIRB
+    url: cirb.brussels
 servers:
-  - url: http://localhost:8086
+  - url: 'http://localhost:8086'
     description: Generated server url
 paths:
-  /api/{postId}/comments:
+  '/api/{postId}/comments':
     get:
       operationId: getComments
       parameters:
@@ -17,7 +25,7 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: default response
           content:
             '*/*':
@@ -25,6 +33,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
+      tags:
+        - CommentController
     post:
       operationId: createComment
       parameters:
@@ -40,13 +50,13 @@ paths:
             schema:
               $ref: '#/components/schemas/CommentDTO'
       responses:
-        "200":
+        '200':
           description: default response
   /api/users:
     get:
       operationId: getAllUser
       responses:
-        "200":
+        '200':
           description: default response
           content:
             '*/*':
@@ -54,6 +64,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+      tags:
+        - UserController
     post:
       operationId: createUser
       requestBody:
@@ -62,9 +74,9 @@ paths:
             schema:
               $ref: '#/components/schemas/UserDTO'
       responses:
-        "200":
+        '200':
           description: default response
-  /api/posts/{postId}:
+  '/api/posts/{postId}':
     put:
       operationId: likePost
       parameters:
@@ -75,9 +87,11 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: default response
-  /api/posts/api/{postId}:
+      tags:
+        - PostController
+  '/api/posts/api/{postId}':
     get:
       operationId: getPost
       parameters:
@@ -88,17 +102,19 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: default response
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Post'
+      tags:
+        - PostController
   /api/posts:
     get:
       operationId: getPosts
       responses:
-        "200":
+        '200':
           description: default response
           content:
             '*/*':
@@ -106,6 +122,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Post'
+      tags:
+        - PostController
     post:
       operationId: createPost
       requestBody:
@@ -114,9 +132,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PostDTO'
       responses:
-        "200":
+        '200':
           description: default response
-  /api/users/{userId}:
+  '/api/users/{userId}':
     get:
       operationId: getUser
       parameters:
@@ -127,12 +145,14 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: default response
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/User'
+      tags:
+        - UserController
     put:
       operationId: updateUser
       parameters:
@@ -148,7 +168,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserDTO'
       responses:
-        "200":
+        '200':
           description: default response
 components:
   schemas:
@@ -169,6 +189,8 @@ components:
         post:
           type: integer
           format: int32
+      x-tags:
+        - Comment
     User:
       type: object
       properties:
@@ -189,19 +211,25 @@ components:
         registerDate:
           type: string
           format: date
+      x-tags:
+        - User
     CommentDTO:
-      required:
-        - author
-        - message
       type: object
       properties:
         message:
           type: string
+          minLength: 1
+          maxLength: 500
         author:
           type: string
         post:
           type: integer
           format: int32
+      required:
+        - message
+        - author
+      x-tags:
+        - Comment
     Post:
       type: object
       properties:
@@ -219,6 +247,8 @@ components:
         author:
           type: integer
           format: int32
+      x-tags:
+        - Post
     PostDTO:
       required:
         - author
@@ -229,14 +259,9 @@ components:
           type: string
         author:
           type: string
+      x-tags:
+        - Post
     UserDTO:
-      required:
-        - dateOfBirth
-        - email
-        - firstName
-        - gender
-        - lastName
-        - registerDate
       type: object
       properties:
         lastName:
@@ -245,11 +270,29 @@ components:
           type: string
         email:
           type: string
+          format: email
         gender:
           type: string
+          enum:
+            - M
+            - F
+            - X
         dateOfBirth:
           type: string
           format: date
         registerDate:
           type: string
           format: date
+      required:
+        - lastName
+        - firstName
+        - email
+        - gender
+        - dateOfBirth
+        - registerDate
+      x-tags:
+        - User
+tags:
+  - name: CommentController
+  - name: UserController
+  - name: PostController
