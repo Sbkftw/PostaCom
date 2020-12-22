@@ -1,28 +1,18 @@
 package com.sbkftw.postacom.rest;
 
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import com.sbkftw.postacom.generated.api.UserApi;
+import com.sbkftw.postacom.generated.model.UserDTO;
 import com.sbkftw.postacom.model.User;
 import com.sbkftw.postacom.persistence.UserRepository;
-import com.sbkftw.postacom.rest.dto.UserDTO;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "api/users")
-public class UserController {
+public class UserController implements UserApi {
 
     private final UserRepository userRepository;
     private final ModelMapper    modelMapper;
@@ -33,31 +23,20 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    @Override
+    public ResponseEntity<Void> createUser(@Valid UserDTO userDTO) {
+        userRepository.save(convertToEntity(userDTO));
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{userId}")
-    public User getUser(@PathVariable("userId") @Digits(integer = 10, fraction = 0) @NotNull Integer id) {
-        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public void createUser(@RequestBody @Valid UserDTO user) {
-        userRepository.save(convertToEntity(user));
-    }
-
-    @PutMapping(value = "/{userId}", consumes = APPLICATION_JSON_VALUE)
-    public void updateUser(@PathVariable("userId") @Digits(integer = 10, fraction = 0) @NotNull Integer id,
-            @RequestBody @Valid UserDTO user) {
-        User updatedUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        modelMapper.map(convertToEntity(user), updatedUser);
-        updatedUser.setId(id);
-        userRepository.save(updatedUser);
+    @Override
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 
     private User convertToEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
+
 }

@@ -43,6 +43,11 @@
     <!-- END -->
 
     <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>0.2.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
@@ -54,7 +59,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -74,6 +78,21 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.11.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.13</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
@@ -97,6 +116,11 @@
       <groupId>org.modelmapper</groupId>
       <artifactId>modelmapper</artifactId>
       <version>2.3.5</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>1.6.1</version>
     </dependency>
   </dependencies>
 
@@ -135,6 +159,11 @@
               <generatorName>spring</generatorName>
               <modelPackage>com.sbkftw.postacom.generated.model</modelPackage>
               <apiPackage>com.sbkftw.postacom.generated.api</apiPackage>
+              <importMappings>
+                <importMapping>User=com.sbkftw.postacom.model.User</importMapping>
+                <importMapping>Post=com.sbkftw.postacom.model.Post</importMapping>
+                <importMapping>Comment=com.sbkftw.postacom.model.Comment</importMapping>
+              </importMappings>
               <output>${project.build.directory}/generated-sources/postacom-api</output>
               <generateApiTests>true</generateApiTests>
               <configOptions>
