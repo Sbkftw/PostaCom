@@ -1,4 +1,4 @@
-package com.sbkftw.postacom.model;
+package com.m3.postacom.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -14,19 +14,22 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "comment", schema = "public")
-public class Comment {
+@Table(name = "post", schema = "public")
+public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq")
-    @SequenceGenerator(name = "comment_seq", sequenceName = "comment_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq")
+    @SequenceGenerator(name = "post_seq", sequenceName = "post_id_seq", allocationSize = 1)
     private Integer       id;
     @NonNull
-    private String        message;
+    private String        text;
+    private Integer       likes;
     @NonNull
     private LocalDateTime publishDate;
     @NonNull
     private Integer       author;
-    @NonNull
-    private Integer       post;
+
+    public void like() {
+        this.likes++;
+    }
 }

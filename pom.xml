@@ -21,8 +21,8 @@
 
   <dependencies>
 
-    <!-- Swagger3 + Swagger-UI -->
-    <!--<dependency>
+    Swagger3 + Swagger-UI
+    <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-boot-starter</artifactId>
       <version>3.0.0</version>
@@ -31,8 +31,8 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
       <version>3.0.0</version>
-    </dependency>-->
-    <!-- END -->
+    </dependency>
+    END
 
     <!-- SpringDoc OpenAPI -->
     <dependency>
@@ -160,9 +160,9 @@
               <modelPackage>com.sbkftw.postacom.generated.model</modelPackage>
               <apiPackage>com.sbkftw.postacom.generated.api</apiPackage>
               <importMappings>
-                <importMapping>User=com.sbkftw.postacom.model.User</importMapping>
-                <importMapping>Post=com.sbkftw.postacom.model.Post</importMapping>
-                <importMapping>Comment=com.sbkftw.postacom.model.Comment</importMapping>
+                <importMapping>User=com.m3.postacom.model.User</importMapping>
+                <importMapping>Post=com.m3.postacom.model.Post</importMapping>
+                <importMapping>Comment=com.m3.postacom.model.Comment</importMapping>
               </importMappings>
               <output>${project.build.directory}/generated-sources/postacom-api</output>
               <generateApiTests>true</generateApiTests>

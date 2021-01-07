@@ -1,4 +1,4 @@
-package com.sbkftw.postacom.configuration;
+package com.m3.postacom.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.sbkftw.postacom;
+package com.m3.postacom;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

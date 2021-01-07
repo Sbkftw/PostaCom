@@ -1,4 +1,4 @@
-package com.sbkftw.postacom.model;
+package com.m3.postacom.model;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
